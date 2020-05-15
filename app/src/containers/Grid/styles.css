@@ -1,0 +1,9 @@
+.Grid {
+  width: 600px;
+  height: 400px;
+  background-color: #e4e4e4;
+}
+
+.row {
+  display: flex;
+}

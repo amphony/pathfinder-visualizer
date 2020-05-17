@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import GridItem from '../../components/GridItem';
 import Box from '@material-ui/core/Box';
+import dijkstraInOrderNodes from '../../algorithms/dijksra';
 import './styles.css';
 
 const GRID_WIDTH = 600;
@@ -13,7 +14,9 @@ const Grid = () => {
     useState([...Array(GRID_SIZE).keys()].map(_ =>
       [...Array(GRID_SIZE).keys()].map(_ => 'O'))); 
   const [startExists, setStart] = useState(false);
+  const [startPos, setStartPos] = useState(null);
   const [endExists, setEnd] = useState(false);
+  const [endPos, setEndPos] = useState(null);
   const [isSettingWalls, toggleWalls] = useState(false);
   const [walls, setWalls] = useState([]);
 
@@ -27,12 +30,14 @@ const Grid = () => {
       updatedGrid[rowIndex][colIndex] = 'S';
       updateGrid(updatedGrid);
       setStart(true);
+      setStartPos([rowIndex, colIndex]);
     } else if (startExists && !endExists) {
       cell.classList += ' end';
       let updatedGrid = grid;
       updatedGrid[rowIndex][colIndex] = 'E';
       updateGrid(updatedGrid);
       setEnd(true);
+      setEndPos([rowIndex, colIndex]);
     }
   };
 
@@ -81,6 +86,7 @@ const Grid = () => {
           ))}
         </div>
       ))}
+      <button onClick={() => dijkstraInOrderNodes(grid, startPos, endPos)}>Dijkstra</button>
     </Box>
   );
 };

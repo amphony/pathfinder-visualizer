@@ -4,12 +4,14 @@ import './styles.css';
 const GridItem = props => {
   return (
     <div
-      className="GridItem"
       onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
+      onMouseEnter={props.onMouseEnter}
+      onMouseUp={props.onMouseUp}
+      className="GridItem"
       style={{
         width: `${props.width}px`,
         height: `${props.height}px`,
-        backgroundColor: `${props.visited ? '#e74c3c' : '#ecf0f1'}`
       }}
     >
     </div>

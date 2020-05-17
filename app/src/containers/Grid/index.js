@@ -8,57 +8,79 @@ const GRID_HEIGHT = 400;
 const GRID_SIZE = 20;
 
 const Grid = () => {
-  function generateGrid() {
-    let grid = new Array(GRID_SIZE);
+  // initial grid filled with "O"s, open squares
+  const [grid, updateGrid] =
+    useState([...Array(GRID_SIZE).keys()].map(_ =>
+      [...Array(GRID_SIZE).keys()].map(_ => 'O'))); 
+  const [startExists, setStart] = useState(false);
+  const [endExists, setEnd] = useState(false);
+  const [isSettingWalls, toggleWalls] = useState(false);
+  const [walls, setWalls] = useState([]);
 
-    for (let i = 0; i < GRID_SIZE; i++) {
-      grid[i] = new Array(GRID_SIZE);
-      for (let j = 0; j < GRID_SIZE; j++) {
-        grid[i][j] =
-          <GridItem
-            key={i+'-'+j}
-            visited={false}
-            onClick={() => onChange(i, j)}
-            width={GRID_WIDTH/GRID_SIZE}
-            height={GRID_HEIGHT/GRID_SIZE}
-          />;
-      }
+  // helper functions
+  const handleClick = (rowIndex, colIndex, e) => {
+    const cell = e.target;
+
+    if (!startExists) {
+      cell.classList += ' start';
+      let updatedGrid = grid;
+      updatedGrid[rowIndex][colIndex] = 'S';
+      updateGrid(updatedGrid);
+      setStart(true);
+    } else if (startExists && !endExists) {
+      cell.classList += ' end';
+      let updatedGrid = grid;
+      updatedGrid[rowIndex][colIndex] = 'E';
+      updateGrid(updatedGrid);
+      setEnd(true);
     }
-
-    return grid;
   };
 
-  const [grid, updateGrid] = useState(generateGrid());
+  const handleMouseDown = (rowIndex, colIndex, e) => {
+    if (startExists && endExists) {
+      const cell = e.target;
+      toggleWalls(true);
+      setWalls([...walls, [rowIndex, colIndex]]);
+      cell.classList += ' wall';
+    }
+  };
 
-  const onChange = (i, j) => {
-    let updatedGrid = [...grid];
-    updatedGrid[i][j] =
-      <GridItem
-        key={i+'-'+j}
-        visited={!updatedGrid[i][j].props.visited}
-        onClick={() => onChange(i, j)}
-        width={GRID_WIDTH/GRID_SIZE}
-        height={GRID_HEIGHT/GRID_SIZE}
-      />
+  const handleMouseEnter = (rowIndex, colIndex, e) => {
+    if (isSettingWalls) {
+      setWalls([...walls, [rowIndex, colIndex]]);
+      e.target.classList += ' wall';
+    }
+  };
+
+  const handleMouseUp = (rowIndex, colIndex, e) => {
+    toggleWalls(false);
+    let updatedGrid = grid;
+    for (const wall of walls) {
+      updatedGrid[wall[0]][wall[1]] = 'W';
+    }
+    setWalls([]);
     updateGrid(updatedGrid);
+    console.log(grid);
   };
-
-  // const blowUp = () => {
-  //   for (let i = 0; i < GRID_SIZE; i++) {
-  //     for (let j = 0; j < GRID_SIZE; j++) {
-  //       setTimeout(onChange(i, j), 10000);
-  //     }
-  //   }
-  // };
 
   return (
-    <Box className="Grid" boxShadow={10}>
-      { grid.map((row, rowIdx) => (
-        <div className="row" key={rowIdx}>
-          { row.map(cell => cell) }
+    <Box className="grid" boxShadow={10}>
+      { grid.map((row, rowIndex) => (
+        <div className="row" key={rowIndex}>
+          { row.map((col, colIndex) => (
+            <GridItem
+              onClick={e => handleClick(rowIndex, colIndex, e)}
+              onMouseDown={e => handleMouseDown(rowIndex, colIndex, e)}
+              onMouseEnter={e => handleMouseEnter(rowIndex, colIndex, e)}
+              onMouseUp={e => handleMouseUp(rowIndex, colIndex, e)}
+              id={`${rowIndex}-${colIndex}`}
+              key={`${rowIndex}-${colIndex}`}
+              width={GRID_WIDTH/GRID_SIZE}
+              height={GRID_HEIGHT/GRID_SIZE}
+             />
+          ))}
         </div>
       ))}
-      {/* <button onClick={() => blowUp()}>Click</button> */}
     </Box>
   );
 };

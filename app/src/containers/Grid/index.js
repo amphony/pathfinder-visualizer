@@ -21,6 +21,7 @@ const Grid = () => {
   const [walls, setWalls] = useState([]);
 
   // helper functions
+  // click for start and end positions
   const handleClick = (rowIndex, colIndex, e) => {
     const cell = e.target;
 
@@ -41,6 +42,7 @@ const Grid = () => {
     }
   };
 
+  // mouse handlers for wall creation
   const handleMouseDown = (rowIndex, colIndex, e) => {
     if (startExists && endExists) {
       const cell = e.target;
@@ -65,7 +67,15 @@ const Grid = () => {
     }
     setWalls([]);
     updateGrid(updatedGrid);
-    console.log(grid);
+  };
+
+  const animateNodesFrom = (nodesInOrder) => {
+    for (let i = 0; i < nodesInOrder.length; i++) {
+      setTimeout(() => {
+        let el = document.getElementById(`${nodesInOrder[i][0]}-${nodesInOrder[i][1]}`);
+        el.classList += ' visited';
+      }, 10 * i);
+    }
   };
 
   return (
@@ -86,7 +96,7 @@ const Grid = () => {
           ))}
         </div>
       ))}
-      <button onClick={() => dijkstraInOrderNodes(grid, startPos, endPos)}>Dijkstra</button>
+      <button onClick={() => animateNodesFrom(dijkstraInOrderNodes(grid, startPos, endPos))}>Dijkstra</button>
     </Box>
   );
 };

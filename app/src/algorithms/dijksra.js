@@ -5,6 +5,7 @@ const dijkstraInOrderNodes = (grid, start, end) => {
   let dist =
     [...Array(20).keys()].map(_ =>
       [...Array(20).keys()].map(_ => Infinity));
+  let nodesInOrder = [];
 
   // Add all vertices to priority queue
   for (let i = 0; i < grid.length; i++) {
@@ -26,11 +27,13 @@ const dijkstraInOrderNodes = (grid, start, end) => {
     const priority = node.priority; 
     const uDist = dist[x][y];
 
-    // Hotfix: if dist matrix has positive int, but queue has infinity
-    // Skip
+    // Hotfix: if dist matrix has positive int, but queue has infinity, skip
     if (priority === Infinity && dist[x][y] != Infinity) continue;
+    else if (grid[x][y] == "O") nodesInOrder.push([x, y]);
     else if (grid[x][y] == "E") {
-      console.log('found end');
+      console.log(`End reachable by ${dist[end[0]][end[1]]} spaces.`);
+      console.log(nodesInOrder);
+      return nodesInOrder;
     }
 
     // Check neighbors of node - up, right, down, left
@@ -73,7 +76,7 @@ const dijkstraInOrderNodes = (grid, start, end) => {
     }
   }
 
-  console.log(`End reachable by ${dist[end[0]][end[1]]} spaces.`);
+  return nodesInOrder;
 };
 
 export default dijkstraInOrderNodes;

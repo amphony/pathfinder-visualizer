@@ -13,5 +13,9 @@
 }
 
 .wall {
-  background-color: #95a5a6;
+  background-color: #34495e;
+}
+
+.visited {
+  background-color: #f1c40f;
 }

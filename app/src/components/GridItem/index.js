@@ -8,6 +8,7 @@ const GridItem = props => {
       onMouseDown={props.onMouseDown}
       onMouseEnter={props.onMouseEnter}
       onMouseUp={props.onMouseUp}
+      id={props.id}
       className="GridItem"
       style={{
         width: `${props.width}px`,

@@ -3,8 +3,8 @@ import { MinPriorityQueue } from '@datastructures-js/priority-queue';
 const dijkstraInOrderNodes = (grid, start, end) => {
   let q = new MinPriorityQueue({ priority: (node) => node.distance });
   let dist =
-    [...Array(20).keys()].map(_ =>
-      [...Array(20).keys()].map(_ => Infinity));
+    [...Array(30).keys()].map(_ =>
+      [...Array(30).keys()].map(_ => Infinity));
   let nodesInOrder = [];
 
   // Add all vertices to priority queue

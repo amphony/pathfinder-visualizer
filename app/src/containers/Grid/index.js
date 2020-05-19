@@ -10,6 +10,7 @@ import GridItem from '../../components/GridItem';
 import Box from '@material-ui/core/Box';
 import dijkstraInOrderNodes from '../../algorithms/dijksra';
 import dfsInOrderNodes from '../../algorithms/dfs';
+import aStarInOrderNodes from '../../algorithms/astar';
 import './styles.css';
 
 const GRID_WIDTH = document.documentElement.clientWidth * 0.70;
@@ -87,6 +88,8 @@ const Grid = () => {
       animateNodesFrom(dijkstraInOrderNodes(grid, startPos, endPos));
     } else if (algorithm === "Dfs") {
       animateNodesFrom(dfsInOrderNodes(grid, startPos, endPos));
+    } else if (algorithm === "Astar") {
+      animateNodesFrom(aStarInOrderNodes(grid, startPos, endPos));
     }
   }
 
@@ -155,7 +158,7 @@ const Grid = () => {
                 onChange={handleChange}
               >
                 <MenuItem value="Dijkstra" selected>Dijkstra</MenuItem>
-                <MenuItem value="A Star">A Star</MenuItem>
+                <MenuItem value="Astar">A Star</MenuItem>
                 <MenuItem value="Dfs">Depth-first Search</MenuItem>
               </Select>
             </FormControl>

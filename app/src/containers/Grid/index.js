@@ -9,6 +9,7 @@ import Slider from '@material-ui/core/Slider';
 import GridItem from '../../components/GridItem';
 import Box from '@material-ui/core/Box';
 import dijkstraInOrderNodes from '../../algorithms/dijksra';
+import dfsInOrderNodes from '../../algorithms/dfs';
 import './styles.css';
 
 const GRID_WIDTH = document.documentElement.clientWidth * 0.70;
@@ -84,6 +85,8 @@ const Grid = () => {
   const processAlgorithm = () => {
     if (algorithm === "Dijkstra") {
       animateNodesFrom(dijkstraInOrderNodes(grid, startPos, endPos));
+    } else if (algorithm === "Dfs") {
+      animateNodesFrom(dfsInOrderNodes(grid, startPos, endPos));
     }
   }
 
@@ -100,7 +103,7 @@ const Grid = () => {
     return (
       <div className="legend-item-container">
         <div
-          class="legend-item"
+          className="legend-item"
           style={{
             width: `${(GRID_WIDTH/GRID_SIZE)*.60}px`,
             height: `${(GRID_HEIGHT/GRID_SIZE)*.60}px`,
@@ -153,7 +156,7 @@ const Grid = () => {
               >
                 <MenuItem value="Dijkstra" selected>Dijkstra</MenuItem>
                 <MenuItem value="A Star">A Star</MenuItem>
-                <MenuItem value="Depth-first Search">Depth-first Search</MenuItem>
+                <MenuItem value="Dfs">Depth-first Search</MenuItem>
               </Select>
             </FormControl>
             <div id="speed-slider">

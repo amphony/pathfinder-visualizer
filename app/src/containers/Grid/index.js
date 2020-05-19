@@ -29,6 +29,7 @@ const Grid = () => {
   const [endPos, setEndPos] = useState(null);
   const [isSettingWalls, toggleWalls] = useState(false);
   const [walls, setWalls] = useState([]);
+  const [speed, setSpeed] = useState(10);
 
   // helper functions
   // click for start and end positions
@@ -83,6 +84,10 @@ const Grid = () => {
     setAlgorithm(e.target.value);
   }
 
+  const changeSpeed = (e, newValue) => {
+    setSpeed(100 - newValue);
+  }
+
   const processAlgorithm = () => {
     if (algorithm === "Dijkstra") {
       animateNodesFrom(dijkstraInOrderNodes(grid, startPos, endPos));
@@ -98,7 +103,7 @@ const Grid = () => {
       setTimeout(() => {
         let el = document.getElementById(`${nodesInOrder[i][0]}-${nodesInOrder[i][1]}`);
         el.classList += ' visited';
-      }, 10 * i);
+      }, speed * i);
     }
   };
 
@@ -171,11 +176,12 @@ const Grid = () => {
                 Speed
               </Typography>
               <Slider
-                defaultValue={20}
+                onChange={changeSpeed}
+                value={100 - speed}
                 step={10}
                 marks
                 min={10}
-                max={100}
+                max={90}
               >
               </Slider>
             </div>

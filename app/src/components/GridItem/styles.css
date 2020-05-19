@@ -1,0 +1,21 @@
+.GridItem {
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #ecf0f1;
+}
+
+.start {
+  background-color: #16a085;
+}
+
+.end {
+  background-color: #c0392b;
+}
+
+.wall {
+  background-color: #34495e;
+}
+
+.visited {
+  background-color: #f1c40f;
+}

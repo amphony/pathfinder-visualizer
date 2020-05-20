@@ -1,0 +1,12 @@
+.legend-item-container {
+  display: flex;
+  padding: 6px;
+  width: 64px;
+  align-items: center;
+}
+
+.legend-item {
+  display: inline-block;
+  margin-right: 4px;
+  border: 1px solid black;
+}
